@@ -53,9 +53,6 @@ const checkHeaders = (request: NextRequest)=>{
   }
 }
 
-
-//bots
-
 // secret key
 const checkSecretKey = (request: NextRequest) => {
   const secretKey = 'artichoke'

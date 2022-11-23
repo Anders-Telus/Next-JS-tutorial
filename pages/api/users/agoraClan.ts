@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { User, users } from './data/data';
+import { User, users } from '../../../data/data';
 
 type Data = {
   data: User[];
