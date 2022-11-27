@@ -12,13 +12,14 @@ export async function middleware(req: NextRequest) {
   const role = req.headers.get("authorization") ?? '';
   const { pathname } = req.nextUrl;
 
-  if (isUserRoute(pathname) && ["user", "admin"].includes(role)) {
-    return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
+  if (isUserRoute(pathname)) {
+    return NextResponse.redirect(new URL('/api/getUsers/list', req.url));
   }
 
   if (isAdminRoute(pathname) && role !== "admin") {
     return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
   }
+
 
   return NextResponse.next();
 }
