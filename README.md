@@ -25,6 +25,6 @@ export const config = {
 
 - <https://openweathermap.org/api/geocoding-api#reverse_how>
 
+## Test out the weather from Toronto
 
-Test out the weather from Toronto
 43.6532° N, 79.3832° W
