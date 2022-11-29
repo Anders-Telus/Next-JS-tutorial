@@ -1,7 +1,11 @@
 import {useState} from 'react';
+import { GetServerSideProps } from 'next';
 import axios from 'axios';
 
-export default function Weather() {
+
+
+
+  const Weather = ({ cat }) => {
 	const [lat, setLat] = useState('');
 	const [long, setLong] = useState('');
 	const [temp, setTemp] = useState(Number);
@@ -45,6 +49,7 @@ export default function Weather() {
 			<div>
 				<h2 className="font-raleway text-5xl font-extrabold mb-10 sm:text-4xl">
 					Agora Weather App
+					Toronto -> 43.6532° N, 79.3832° W
 				</h2>
 			</div>
 			<div className="flex sm:flex-col">
@@ -90,4 +95,13 @@ export default function Weather() {
 			)}
 		</div>
 	);
+};
+
+export async function getServerSideProps(){
+	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d');
+		console.log(data)
+		return {props:data};
 }
+
+
+export default Weather;
