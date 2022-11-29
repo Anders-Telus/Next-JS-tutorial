@@ -1,3 +1,5 @@
+
+
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import { NextApiResponse } from 'next';
@@ -29,47 +31,32 @@ const weather =()=>{
       const newTemp = Math.ceil(data.main.temp);
       const newMinTemp = Math.ceil(data.main.temp_min);
       const newMaxTemp = Math.ceil(data.main.temp_max);
-      return response.json(401);
-    //  setTemp(newTemp);
-   //   setMinTemp(newMinTemp);
-    //  setMaxTemp(newMaxTemp);
+      return response.json(200,response);
+ 
     })
     .catch(function (error:any) {
-      console.error(error);
-    //  setErr(true);
+
     });
 }
 
 export async function middleware(req: NextRequest,  res: NextApiResponse<any>) {
+
+  console.log(res,'NextApiResponse');
+
+  console.log(req,'NextRequest' );
   const { pathname } = req.nextUrl;
   if (pathname.startsWith("/weather")){
- //  await weather();
-    console.log(res,'middleware' );
-   // return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
-   // return NextResponse.next();
-  }
  
-  const role = req.headers.get("authorization") ?? '';
+    console.log(res,'middleware' );
 
+  }
 
-//   if (isUserRoute(pathname)) {
-    
-//       return NextResponse.redirect(new URL('/api/getUsers/list'));
-  
-//   }
-//  //   
-
-//   if (isAdminRoute(pathname) && role !== "admin") {
-//     return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
-//   }
-
-
+    if (isAdminRoute(pathname)) {
+    return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
+  }
 
   return NextResponse.next();
 }
-
-export const config = { matcher: '/((?!.*\\.).*)' }
-
-// export const config = {
-//     matcher: ['/api/']
-// };
+export const config = {
+  matcher: ['/api/users/:path*', '/api/admin/:path*']
+};

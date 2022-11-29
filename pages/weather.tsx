@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 
-  const Weather = ({ cat }) => {
+  const Weather = () => {
 	const [lat, setLat] = useState('');
 	const [long, setLong] = useState('');
 	const [temp, setTemp] = useState(Number);
@@ -99,7 +99,7 @@ import axios from 'axios';
 
 export async function getServerSideProps(){
 	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d');
-		console.log(data)
+		console.log(data,'ServerProps')
 		return {props:data};
 }
 
