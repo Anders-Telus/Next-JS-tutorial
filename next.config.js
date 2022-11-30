@@ -14,7 +14,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/hello',
+        source: '/api',
         headers: [
           {
             key: 'x-hello',

@@ -117,6 +117,8 @@ export async function getServerSideProps({ req, res }) {
 		return {props:data};
 }
 
+
+
 export  function server(){
 	fetch("https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d", {
      
