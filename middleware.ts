@@ -45,8 +45,8 @@ export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
   console.log(req, 'NextRequest')
   const { pathname } = req.nextUrl
   if (pathname.startsWith('/weather')) {
-    const cookies = new Cookies(req, res)
-   console.log(cookies, 'got cookies')
+  const cookies = new Cookies(req, res)
+   console.log(cookies.set('myCookieName'), 'got cookies')
   
    const { device } = userAgent(req)
    const deviceType = device.type = 'mobile'
@@ -57,7 +57,7 @@ export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
 
     //Test API Call
    let getWeather = await weather();
-   return NextResponse.rewrite(new URL('/api/auth/unauthorized', req.url))
+   return NextResponse.rewrite(new URL('/api/getUsers/list', req.url))
 return NextResponse.rewrite('/api/auth/unauthorized');
    
    //new Response(JSON.stringify(getWeather))
