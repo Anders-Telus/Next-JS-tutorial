@@ -1,12 +1,15 @@
 import {useState} from 'react';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
-
+import { useCookies } from "react-cookie"
+import Cookies from 'cookies'
+import cookieCutter from 'cookie-cutter'
 
 
 
   const Weather = () => {
 	const [lat, setLat] = useState('');
+	const [cookie, setCookie] = useCookies(["user"])
 	const [long, setLong] = useState('');
 	const [temp, setTemp] = useState(Number);
 	const [minTemp, setMinTemp] = useState(Number);
@@ -97,10 +100,37 @@ import axios from 'axios';
 	);
 };
 
-export async function getServerSideProps(){
-	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d');
-		console.log(data,'ServerProps')
+export async function getServerSideProps({ req, res }) {
+	const config = {
+		headers:{
+		  header1: "test",
+		  header2: "test3"
+		}
+	  };
+	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d',config);
+		const cookies = new Cookies(req, res)//
+		console.log(Object.keys(data))
+		cookies.set('myCookieName', JSON.stringify(data));
+		console.log(data,'ServerProps');
+	//	console.log(data.headers);
+	//	const cookies = new Cookies(data)// Create a cookies instance
 		return {props:data};
+}
+
+export  function server(){
+	fetch("https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d", {
+     
+    // Adding method type
+    method: "POST",
+     
+    // Adding body or contents to send,
+    // Adding headers to the request
+	headers: {
+		'Agora-Key': '0007',
+		'Agora-Host': 'agora.com',
+		"Content-type": "application/json; charset=UTF-8"
+	},
+})
 }
 
 
