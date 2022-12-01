@@ -47,15 +47,15 @@ export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
     const cookies = new Cookies(req, res)
      req.cookies.set('myCookieName', 'anders');
     req.headers.set('anders','lind');
-    let getWeather = await weather()
-
+    const data = (await fetch('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d')).json();
+		console.log(data,'test')
     const { device } = userAgent(req)
     const deviceType = (device.type = 'mobile')
    
     response.headers.append('device-type', deviceType)
     response.headers.append('agora', 'Made it')
     response.headers.set('set-cookie', 'anders-was-here')
-    response.headers.set('x-modified-edge', JSON.stringify(getWeather))
+    response.headers.set('x-modified-edge', JSON.stringify(data))
 
     //Test API Call
    // let getWeather = await weather()
