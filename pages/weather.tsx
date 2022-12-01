@@ -110,8 +110,8 @@ export async function getServerSideProps({ req, res }) {
 	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d',config);
 		const cookies = new Cookies(req, res)//
 		console.log(Object.keys(data))
-		cookies.set('myCookieName', JSON.stringify(data));
-		console.log(data,'UI Data from external service');
+		//cookies.set('myCookieName', JSON.stringify(data));
+		console.log(req,'UI Data from external service');
 		return {props:data};
 }
 

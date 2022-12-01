@@ -17,6 +17,7 @@ const isExternalApi = (pathName: string) => {
   return pathName.startsWith('api.openweathermap')
 }
 const weather = () => {
+  console.log('made it');
   const options = {
     method: 'post',
     url: 'https://api.openweathermap.org/data/2.5/weather',
@@ -28,10 +29,10 @@ const weather = () => {
   }
   axios
     .request(options)
-    .then(function (response: any) {
+    .then((response: any) => {
       const { data } = response
       console.log(response, 'middleware test with api call')
-      return response.status(200).json({ data: response })
+      return data;
 
       //    return response.json(200, response)
     })
@@ -40,27 +41,29 @@ const weather = () => {
 }
 
 export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
-  console.log(req.cookies, 'cookies made it')
-
-  console.log(req, 'NextRequest')
   const { pathname } = req.nextUrl
   if (pathname.startsWith('/weather')) {
+    const response = NextResponse.next();
     const cookies = new Cookies(req, res)
+     req.cookies.set('myCookieName', 'anders');
+    req.headers.set('anders','lind');
+    let getWeather = await weather()
 
     const { device } = userAgent(req)
     const deviceType = (device.type = 'mobile')
-    const response = NextResponse.next()
+   
     response.headers.append('device-type', deviceType)
-
-    response.headers.append('data', cookies)
+    response.headers.append('agora', 'Made it')
+    response.headers.set('set-cookie', 'anders-was-here')
+    response.headers.set('x-modified-edge', JSON.stringify(getWeather))
 
     //Test API Call
-    let getWeather = await weather()
-    return NextResponse.rewrite(new URL('/api/getUsers/list', req.url))
-    return NextResponse.rewrite('/api/auth/unauthorized')
+   // let getWeather = await weather()
+    return response
   }
 
   if (isAdminRoute(pathname)) {
+    console.log('made it to unauthorized')
     return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url))
   }
 
