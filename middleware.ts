@@ -31,9 +31,9 @@ const weather = () => {
     .then(function (response: any) {
       const { data } = response
       console.log(response, 'middleware test with api call')
-      return  response.status(200).json({data: response})
+      return response.status(200).json({ data: response })
 
-  //    return response.json(200, response)
+      //    return response.json(200, response)
     })
 
     .catch(function (error: any) {})
@@ -45,24 +45,19 @@ export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
   console.log(req, 'NextRequest')
   const { pathname } = req.nextUrl
   if (pathname.startsWith('/weather')) {
-  const cookies = new Cookies(req, res)
-   console.log(cookies.set('myCookieName'), 'got cookies')
-  
-   const { device } = userAgent(req)
-   const deviceType = device.type = 'mobile'
-   const response = NextResponse.next()
-   response.headers.append('device-type', deviceType)
+    const cookies = new Cookies(req, res)
 
-   response.headers.append('data',cookies);
+    const { device } = userAgent(req)
+    const deviceType = (device.type = 'mobile')
+    const response = NextResponse.next()
+    response.headers.append('device-type', deviceType)
+
+    response.headers.append('data', cookies)
 
     //Test API Call
-   let getWeather = await weather();
-   return NextResponse.rewrite(new URL('/api/getUsers/list', req.url))
-return NextResponse.rewrite('/api/auth/unauthorized');
-   
-   //new Response(JSON.stringify(getWeather))
-  // return NextResponse.json({getWeather}); 
-
+    let getWeather = await weather()
+    return NextResponse.rewrite(new URL('/api/getUsers/list', req.url))
+    return NextResponse.rewrite('/api/auth/unauthorized')
   }
 
   if (isAdminRoute(pathname)) {

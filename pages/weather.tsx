@@ -112,8 +112,6 @@ export async function getServerSideProps({ req, res }) {
 		console.log(Object.keys(data))
 		cookies.set('myCookieName', JSON.stringify(data));
 		console.log(data,'ServerProps');
-	//	console.log(data.headers);
-	//	const cookies = new Cookies(data)// Create a cookies instance
 		return {props:data};
 }
 
