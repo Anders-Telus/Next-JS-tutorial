@@ -1,15 +1,11 @@
 import {useState} from 'react';
-import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { useCookies } from "react-cookie"
-import Cookies from 'cookies'
-import cookieCutter from 'cookie-cutter'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 
 
   const Weather = () => {
 	const [lat, setLat] = useState('');
-	const [cookie, setCookie] = useCookies(["user"])
 	const [long, setLong] = useState('');
 	const [temp, setTemp] = useState(Number);
 	const [minTemp, setMinTemp] = useState(Number);
@@ -27,7 +23,7 @@ import cookieCutter from 'cookie-cutter'
 		setTemp(Number);
 		const options = {
 			method: 'post',
-			url: 'https://api.openweathermap.org/data/2.5/weather',
+			url: '/api/weatherAPI',
 			params: {lat: `${lat}`, lon: `${long}`, appid:`${appID}`}
 		};
 		axios
@@ -100,20 +96,15 @@ import cookieCutter from 'cookie-cutter'
 	);
 };
 
-export async function getServerSideProps({ req, res }) {
-	const config = {
-		headers:{
-		  header1: "test",
-		  header2: "test3"
-		}
-	  };
-	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d',config);
-		const cookies = new Cookies(req, res);
-		console.log(req,'UI Data from external service');
+export async function getServerSideProps(req: NextApiRequest,
+	res: NextApiResponse<any>) {
+	
+	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d');
+	   console.log(req,'middleware get headers');
+
+		//console.log(NextRequestMetaSymbol?.toString(),'get meta data');
+	//const cookies = req.headers.cookie;
 		return {props:data};
 }
-
-
-
 
 export default Weather;

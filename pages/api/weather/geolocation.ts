@@ -1,3 +1,4 @@
+import axios from 'axios'
 export const getWeather = () => {
     // resetting states
    // setErr(false);
@@ -16,12 +17,10 @@ export const getWeather = () => {
             const newTemp = Math.ceil(data.main.temp);
             const newMinTemp = Math.ceil(data.main.temp_min);
             const newMaxTemp = Math.ceil(data.main.temp_max);
-            setTemp(newTemp);
-            setMinTemp(newMinTemp);
-            setMaxTemp(newMaxTemp);
+           
         })
         .catch(function (error:any) {
             console.error(error);
-            setErr(true);
+       
         });
 };

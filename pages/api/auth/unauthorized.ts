@@ -27,7 +27,7 @@ const appID= 'e9151a3b6b68ef9c138552eac062260d'
 const getWeather = () => {
   // resetting states
   
-  const options = {
+  const options = {    
     method: 'post',
     url: 'https://api.openweathermap.org/data/2.5/weather',
     params: {lat: 44.0, lon:22.0, appid:`${appID}`}
@@ -46,12 +46,4 @@ const getWeather = () => {
       console.error(error);
     
     });
-};
-const Weather = () => {
-
-/**
-	 *
-	 * fetch weather information of the given city
-	 */
-
 };

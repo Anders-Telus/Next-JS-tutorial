@@ -34,15 +34,13 @@ export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
   const { pathname } = req.nextUrl
   if (pathname.startsWith('/weather')) {
     const response = NextResponse.next()
-    // const cookies = new Cookies(req, res);
-    // const { device } = userAgent(req)
-    // const deviceType = (device.type = 'mobile')
     req.headers.set('Access-Control-Allow-Origin', '*')
     req.cookies.set('myCookieName', 'anders')
     req.headers.set('anders', 'lind')
     response.headers.append('device-type', '007 phones')
     response.headers.append('agora', 'Made it')
     response.headers.set('set-cookie', 'anders-was-here')
+    response.cookies.set('cookie-monster','give me a cookie')
     
     return response
   }
