@@ -14,9 +14,7 @@ export const getWeather = () => {
         .then(function (response:any) {
             console.log(response.data);
             const {data} = response;
-            const newTemp = Math.ceil(data.main.temp);
-            const newMinTemp = Math.ceil(data.main.temp_min);
-            const newMaxTemp = Math.ceil(data.main.temp_max);
+            return data;
            
         })
         .catch(function (error:any) {

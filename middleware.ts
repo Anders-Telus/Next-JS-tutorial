@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse, userAgent } from 'next/server'
 import axios from 'axios'
 import { NextApiResponse } from 'next'
-import Cookies from 'cookies';
-import { create } from 'middleware-axios/dist'
-
-type ResponseBody = { message: string }
 
 const isAdminRoute = (pathname: string) => {
   return pathname.startsWith('/api/admin');
 }
-const weather = () => {
+const weather = async () => {
   console.log('made it')
   const options = {
     method: 'post',
@@ -20,6 +16,8 @@ const weather = () => {
       appid: 'e9151a3b6b68ef9c138552eac062260d',
     },
   }
+  console.log('testing api')
+
   axios
     .request(options)
     .then((response: any) => {
@@ -31,6 +29,7 @@ const weather = () => {
 }
 
 export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
+  
   const { pathname } = req.nextUrl
   if (pathname.startsWith('/weather')) {
     const response = NextResponse.next()
@@ -53,5 +52,6 @@ export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
   return NextResponse.next()
 }
 export const config = {
+  runtime: 'experimental-edge',
   matcher: ['/weather:path*', '/api/admin/:path*'],
 }
