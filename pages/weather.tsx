@@ -108,30 +108,12 @@ export async function getServerSideProps({ req, res }) {
 		}
 	  };
 	    const { data } = await axios.post('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d',config);
-		const cookies = new Cookies(req, res)//
-		console.log(Object.keys(data))
-		//cookies.set('myCookieName', JSON.stringify(data));
+		const cookies = new Cookies(req, res);
 		console.log(req,'UI Data from external service');
 		return {props:data};
 }
 
 
-
-export  function server(){
-	fetch("https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d", {
-     
-    // Adding method type
-    method: "POST",
-     
-    // Adding body or contents to send,
-    // Adding headers to the request
-	headers: {
-		'Agora-Key': '0007',
-		'Agora-Host': 'agora.com',
-		"Content-type": "application/json; charset=UTF-8"
-	},
-})
-}
 
 
 export default Weather;

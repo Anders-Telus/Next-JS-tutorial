@@ -1,23 +1,16 @@
 import { NextRequest, NextResponse, userAgent } from 'next/server'
 import axios from 'axios'
 import { NextApiResponse } from 'next'
-import Cookies from 'cookies'
+import Cookies from 'cookies';
+import { create } from 'middleware-axios/dist'
 
 type ResponseBody = { message: string }
 
 const isAdminRoute = (pathname: string) => {
-  return pathname.startsWith('/api/admin')
-}
-
-const isUserRoute = (pathname: string) => {
-  return pathname.startsWith('/api/users')
-}
-
-const isExternalApi = (pathName: string) => {
-  return pathName.startsWith('api.openweathermap')
+  return pathname.startsWith('/api/admin');
 }
 const weather = () => {
-  console.log('made it');
+  console.log('made it')
   const options = {
     method: 'post',
     url: 'https://api.openweathermap.org/data/2.5/weather',
@@ -30,35 +23,27 @@ const weather = () => {
   axios
     .request(options)
     .then((response: any) => {
-      const { data } = response
-      console.log(response, 'middleware test with api call')
+      const { data } = response;
+      console.log(response, 'middleware test with api call');
       return data;
-
-      //    return response.json(200, response)
     })
-
-    .catch(function (error: any) {})
+    .catch(function (error: any) {console.log(error,'http error')})
 }
 
 export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
   const { pathname } = req.nextUrl
   if (pathname.startsWith('/weather')) {
-    const response = NextResponse.next();
-    const cookies = new Cookies(req, res)
-     req.cookies.set('myCookieName', 'anders');
-    req.headers.set('anders','lind');
-    const data = (await fetch('https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d')).json();
-		console.log(data,'test')
-    const { device } = userAgent(req)
-    const deviceType = (device.type = 'mobile')
-   
-    response.headers.append('device-type', deviceType)
+    const response = NextResponse.next()
+    // const cookies = new Cookies(req, res);
+    // const { device } = userAgent(req)
+    // const deviceType = (device.type = 'mobile')
+    req.headers.set('Access-Control-Allow-Origin', '*')
+    req.cookies.set('myCookieName', 'anders')
+    req.headers.set('anders', 'lind')
+    response.headers.append('device-type', '007 phones')
     response.headers.append('agora', 'Made it')
     response.headers.set('set-cookie', 'anders-was-here')
-    response.headers.set('x-modified-edge', JSON.stringify(data))
-
-    //Test API Call
-   // let getWeather = await weather()
+    
     return response
   }
 
