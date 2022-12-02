@@ -21,6 +21,25 @@ export const config = {
 
 ``
 
+# Pages and API 
+
+- Please route to /weather
+
+this page does a few things. Please take note and look at the custom headers we set in the middlewear.
+
+We can also redirect a user based on a guard we use in next.config.js and in ther middlewear its self. 
+
+For example  this code will check if you are not authenticated or not.
+
+``code
+  if (isAdminRoute(pathname)) {
+    console.log('made it to unauthorized')
+    return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url))
+  }
+
+``
+
+
 ## Please sign up and obtain a API key from your new account
 
 - <https://openweathermap.org/api/geocoding-api#reverse_how>
