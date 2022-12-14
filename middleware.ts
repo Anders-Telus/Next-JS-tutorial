@@ -5,7 +5,7 @@ import { NextApiResponse } from 'next'
 const isAdminRoute = (pathname: string) => {
   return pathname.startsWith('/api/admin');
 }
-const weather = async () => {
+const weather:any = async () => {
   console.log('made it')
   const options = {
     method: 'post',
@@ -32,21 +32,30 @@ export async function middleware(req: NextRequest, res: NextApiResponse<any>) {
   
   const { pathname } = req.nextUrl
   if (pathname.startsWith('/weather')) {
-    const response = NextResponse.next()
+    const response = NextResponse.next();
+    let getData = await  weather();
     req.headers.set('Access-Control-Allow-Origin', '*')
     req.cookies.set('myCookieName', 'anders')
     req.headers.set('anders', 'lind')
     response.headers.append('device-type', '007 phones')
+    response.headers.append('device-type', getData)
     response.headers.append('agora', 'Made it')
-    response.headers.set('set-cookie', 'anders-was-here')
+    response.headers.set('set-cookie', 'toronto weather is very cold')
     response.cookies.set('cookie-monster','give me a cookie')
     
     return response
   }
 
   if (isAdminRoute(pathname)) {
+    const response = NextResponse.next()
     console.log('made it to unauthorized')
-    return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url))
+   let getData =  weather();
+  
+   response.headers.append('device-type', getData.data)
+   response.cookies.set('cookiesssr',getData.data)
+    return response
+   //return response;
+  return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url))
   }
 
   return NextResponse.next()

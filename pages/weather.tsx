@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -41,6 +41,7 @@ const Weather = () => {
         setErr(true)
       })
   }
+
   return (
     <div className="flex justify-center items-center h-screen flex-col">
       <div>
@@ -97,6 +98,7 @@ export async function getServerSideProps(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+
   const { data } = await axios.post(
     'https://api.openweathermap.org/data/2.5/weather?lat=33.44&lon=-94.04&appid=e9151a3b6b68ef9c138552eac062260d',
   )

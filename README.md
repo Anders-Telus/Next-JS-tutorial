@@ -1,11 +1,15 @@
-# Getting Started
+# Purpose of why we built this application
+
+How can we manipulate request headers , json requests , security and how to use middlewear
+
+## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
+npm run install && npm run dev
 # or
-yarn dev
+yarn install && yarn dev
 ```
 
 ## To Test out the middleware click on any of the nav bars to navigate to a route
@@ -21,7 +25,7 @@ export const config = {
 
 ``
 
-# Pages and API 
+## Pages and API
 
 - Please route to /weather
 
